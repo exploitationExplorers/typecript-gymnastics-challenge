@@ -1,0 +1,27 @@
+{
+  "name": "ts-challenges-site",
+  "version": "1.0.0",
+  "description": "Learn TypeScript type system through challenges",
+  "main": "index.js",
+  "scripts": {
+    "dev": "npx vitepress dev docs --host 0.0.0.0",
+    "build": "npx vitepress build docs",
+    "preview": "npx vitepress preview docs"
+  },
+  "devDependencies": {
+    "@types/bun": "latest",
+    "vitepress": "^1.6.3",
+    "vue": "^3.5.13"
+  },
+  "peerDependencies": {
+    "typescript": "^5"
+  },
+  "keywords": [
+    "typescript",
+    "challenges",
+    "types",
+    "learning"
+  ],
+  "author": "",
+  "license": "MIT"
+}

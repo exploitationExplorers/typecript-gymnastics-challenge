@@ -1,0 +1,115 @@
+/**
+ * 自定义CSS - TypeScript类型挑战网站
+ */
+
+:root {
+  /* TypeScript蓝色调色板 - 浅色模式 */
+  --ts-blue: #3178c6;
+  --ts-blue-light: #4d8ddd;
+  --ts-blue-dark: #265d9c;
+
+  /* 基础颜色 - 浅色模式 */
+  --vp-c-brand: var(--ts-blue);
+  --vp-c-brand-light: var(--ts-blue-light);
+  --vp-c-brand-dark: var(--ts-blue-dark);
+
+  /* 按钮样式 */
+  --vp-button-brand-border: var(--ts-blue-dark);
+  --vp-button-brand-text: #ffffff;
+  --vp-button-brand-bg: var(--ts-blue);
+  --vp-button-brand-hover-border: var(--ts-blue-dark);
+  --vp-button-brand-hover-text: #ffffff;
+  --vp-button-brand-hover-bg: var(--ts-blue-light);
+  --vp-button-brand-active-border: var(--ts-blue-dark);
+  --vp-button-brand-active-text: #ffffff;
+  --vp-button-brand-active-bg: var(--ts-blue-dark);
+
+  /* 代码块样式 */
+  --vp-code-block-bg: #f6f8fa;
+  --vp-code-line-highlight-color: rgba(49, 120, 198, 0.1);
+
+  /* 主页英雄区样式 */
+  --vp-home-hero-name-color: var(--ts-blue);
+}
+
+/* 深色模式覆盖 */
+.dark {
+  /* 深色模式蓝色 */
+  --ts-blue-dark-mode: #4d8ddd;
+  --ts-blue-light-dark-mode: #6ca1e0;
+  --ts-blue-darker-dark-mode: #3178c6;
+
+  /* 基础颜色 - 深色模式 */
+  --vp-c-brand: var(--ts-blue-dark-mode);
+  --vp-c-brand-light: var(--ts-blue-light-dark-mode);
+  --vp-c-brand-dark: var(--ts-blue-darker-dark-mode);
+
+  /* 代码块样式 - 深色模式 */
+  --vp-code-block-bg: #1e1e1e;
+  --vp-code-line-highlight-color: rgba(77, 141, 221, 0.15);
+}
+
+/* 主题切换按钮自定义样式 */
+.VPSwitchAppearance {
+  border-radius: 8px !important;
+  border: 1px solid var(--vp-c-divider) !important;
+  padding: 2px !important;
+  transition: border-color 0.25s, transform 0.25s !important;
+}
+
+.VPSwitchAppearance:hover {
+  border-color: var(--vp-c-brand) !important;
+  transform: scale(1.05) !important;
+}
+
+/* 代码块样式增强 */
+div[class*='language-'] {
+  border-radius: 8px !important;
+  margin: 18px 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05) !important;
+  transition: box-shadow 0.3s ease !important;
+}
+
+.dark div[class*='language-'] {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2) !important;
+}
+
+div[class*='language-']:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1) !important;
+}
+
+.dark div[class*='language-']:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+/* 内联代码样式 */
+code {
+  color: var(--ts-blue-dark) !important;
+  background-color: rgba(49, 120, 198, 0.1) !important;
+  padding: 2px 5px !important;
+  border-radius: 4px !important;
+}
+
+.dark code {
+  color: var(--ts-blue-light-dark-mode) !important;
+  background-color: rgba(77, 141, 221, 0.15) !important;
+}
+
+/* 导航栏样式增强 */
+.VPNavBar {
+  border-bottom: 1px solid var(--vp-c-divider) !important;
+  backdrop-filter: blur(8px) !important;
+}
+
+.dark .VPNavBar {
+  backdrop-filter: blur(8px) !important;
+}
+
+/* 语言切换样式 */
+.VPNavBarMenuGroup .VPNavBarMenuLink {
+  transition: color 0.25s, transform 0.25s !important;
+}
+
+.VPNavBarMenuGroup .VPNavBarMenuLink:hover {
+  transform: translateX(2px) !important;
+}
