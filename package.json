@@ -23,5 +23,8 @@
     "learning"
   ],
   "author": "",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "marked": "^15.0.7"
+  }
 }

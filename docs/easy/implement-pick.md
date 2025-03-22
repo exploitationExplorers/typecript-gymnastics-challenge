@@ -1,78 +1,105 @@
-# Implement Pick
+# 实现 Pick
 
-## Challenge
+## 挑战
 
-Implement the built-in `Pick<T, K>` utility type without using it.
+不使用内置的 `Pick<T, K>` 泛型，实现自己的 `MyPick<T, K>` 工具类型。
 
-`Pick<T, K>` constructs a type by picking the set of properties `K` from `T`.
+`Pick<T, K>` 能从对象类型 `T` 中选取指定属性 `K` 来构造新的类型。
 
-## Example
+## 示例
 
-```ts
+```typescript
+interface Todo {
+  title: string
+  description: string
+  completed: boolean
+}
+
+type TodoPreview = MyPick<Todo, 'title' | 'completed'>
+// 应该等价于: { title: string; completed: boolean }
+```
+
+## 解题思路
+
+要实现 `MyPick<T, K>` 类型，我们需要：
+
+1. 创建一个新的类型，它只包含 `T` 中那些键名存在于 `K` 中的属性
+2. 使用 TypeScript 的映射类型来实现键的过滤和选择
+
+让我们逐步分析解决方案：
+
+### 步骤 1: 理解映射类型
+
+TypeScript 的映射类型允许我们基于旧类型创建新类型，同时对每个属性应用转换：
+
+```typescript
+type MappedType<T> = {
+  [P in keyof T]: T[P];
+};
+```
+
+### 步骤 2: 添加约束条件
+
+我们需要确保 `K` 只能是 `T` 的键的子集。使用 TypeScript 的 `extends` 约束可以实现：
+
+```typescript
+type MyPick<T, K extends keyof T> = {
+  // 待完成
+};
+```
+
+### 步骤 3: 使用映射类型仅选择 K 中的键
+
+我们可以使用映射类型，但只遍历 `K` 中的键，而不是 `T` 中的所有键：
+
+```typescript
+type MyPick<T, K extends keyof T> = {
+  [P in K]: T[P];
+};
+```
+
+## 完整实现
+
+下面是 `MyPick<T, K>` 的完整实现：
+
+```typescript
+type MyPick<T, K extends keyof T> = {
+  [P in K]: T[P];
+};
+```
+
+让我们验证这个实现是否符合我们的预期：
+
+```typescript
 interface Todo {
   title: string;
   description: string;
   completed: boolean;
 }
 
+// 示例 1: 选择单个属性
+type TodoTitle = MyPick<Todo, 'title'>;
+// { title: string }
+
+// 示例 2: 选择多个属性
 type TodoPreview = MyPick<Todo, 'title' | 'completed'>;
+// { title: string; completed: boolean }
 
-const todo: TodoPreview = {
-  title: 'Clean room',
-  completed: false,
-};
+// 示例 3: 属性必须是存在于对象中的键
+// 下面这行会报错，因为 'missing' 不是 Todo 的有效键
+// type Invalid = MyPick<Todo, 'title' | 'missing'>;
 ```
 
-## Solution Approach
+## 知识点
 
-To implement the `Pick<T, K>` utility type, we need to create a new type that:
-1. Takes two type parameters: `T` (the source object type) and `K` (the keys to pick)
-2. Creates a new type that has only the properties from `T` that are specified in `K`
+1. **泛型**：泛型允许我们创建可重用的类型组件，在这里我们使用泛型 `T` 和 `K` 来表示输入类型和要选择的键。
 
-Let's break down the solution step by step:
+2. **映射类型**：映射类型让我们能够从一个类型中创建新类型，通过遍历原类型的键来转换它们。
 
-### Step 1: Understanding Mapped Types
+3. **keyof 操作符**：`keyof T` 操作符返回类型 `T` 的所有公共属性键的联合类型。
 
-First, let's understand a similar operation, which is creating a type with all properties from another type:
+4. **索引访问类型**：`T[P]` 语法用于访问类型 `T` 中键 `P` 对应的值的类型。
 
-```ts
-type Copy<T> = {
-  [P in keyof T]: T[P];
-};
+5. **extends 约束**：`K extends keyof T` 确保 `K` 只能是 `T` 的键的子集，提供了类型安全。
 
-type Case1 = Copy<{ a: string; b: string }>;
-```
-
-Here, `keyof T` gives us all the keys of `T` as a union type, and `[P in keyof T]` iterates over each key to create a new property with the same type as in the original.
-
-### Step 2: Implementing Pick
-
-The difference with `Pick` is that we only want to include keys that are explicitly specified in the second type parameter:
-
-```ts
-type MyPick<T, K extends keyof T> = {
-  [P in K]: T[P];
-};
-
-// Example:
-// type Case2 = { a: string, b: string }
-type Case2 = MyPick<{ a: string; b: string; c: string }, 'a' | 'b'>;
-```
-
-The `K extends keyof T` constraint ensures that all keys in `K` exist in `T`. Then, `[P in K]` creates properties only for the keys specified in `K`.
-
-### Key Points
-
-1. The `[P in keyof T]: T[P]` syntax creates a new type with all properties from `T`.
-2. The `[P in K]: T[P]` syntax creates properties only for the keys in `K`.
-3. The `K extends keyof T` constraint ensures type safety by requiring all keys in `K` to be valid keys of `T`.
-
-## Complete Implementation
-
-```ts
-type MyPick<T, K extends keyof T> = {
-  [P in K]: T[P];
-};
-```
-
-This is a simple yet powerful example of how TypeScript's type system can be used to create useful utility types.
+通过实现这个类型，我们加深了对 TypeScript 类型系统核心概念的理解：泛型、映射类型和类型约束。
