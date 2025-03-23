@@ -6,6 +6,8 @@ import { h, nextTick, createApp } from 'vue';
 // 导入自定义组件
 import ThemeColorPicker from './components/ThemeColorPicker.vue';
 import CommentSection from './components/CommentSection.vue';
+import NotificationSystem from './components/NotificationSystem.vue';
+import BookmarkManager from './components/BookmarkManager.vue';
 
 // 导入自定义样式
 import './custom.css';
@@ -114,6 +116,8 @@ export default {
     // 注册自定义组件
     app.component('ThemeColorPicker', ThemeColorPicker);
     app.component('CommentSection', CommentSection);
+    app.component('NotificationSystem', NotificationSystem);
+    app.component('BookmarkManager', BookmarkManager);
 
     // 页面加载后应用主题增强
     if (typeof window !== 'undefined') {

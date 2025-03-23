@@ -1,339 +1,3 @@
-<template>
-  <div class="comment-section" :class="{ 'dark-mode': isDarkMode }">
-    <div class="section-title" @click="toggleComments">
-      <div class="title-content">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="icon">
-          <path fill="none" d="M0 0h24v24H0z" />
-          <path d="M12 2c5.523 0 10 4.477 10 10s-4.477 10-10 10c-1.702 0-3.305-.425-4.708-1.175L2 22l1.176-5.29A9.966 9.966 0 0 1 2 12C2 6.477 6.477 2 12 2zm0 2a8 8 0 0 0-8 8c0 1.335.326 2.618.94 3.766l.35.654-.656 2.946 2.948-.654.653.349A7.955 7.955 0 0 0 12 20a8 8 0 0 0 0-16zm0 3a1 1 0 0 1 1 1v3h3a1 1 0 0 1 0 2h-3v3a1 1 0 0 1-2 0v-3H8a1 1 0 0 1 0-2h3V8a1 1 0 0 1 1-1z" fill="currentColor" />
-        </svg>
-        <h2>社区讨论 <span class="comment-count">{{ comments.length }}</span></h2>
-      </div>
-      <span class="toggle-icon" :class="{ 'open': showComments }">▼</span>
-    </div>
-
-    <transition name="fade">
-      <div v-if="showComments" class="comments-container">
-        <!-- 评论输入框 -->
-        <div class="comment-form">
-          <div class="user-avatar" :style="{ backgroundColor: generateAvatarColor(username) }">
-            {{ username.charAt(0).toUpperCase() || '?' }}
-          </div>
-          <div class="input-container">
-            <div class="username-container">
-              <input type="text" v-model="username" placeholder="输入您的昵称..." class="username-input" />
-            </div>
-            <div class="textarea-container">
-              <textarea
-                v-model="newComment"
-                placeholder="分享您的解决方案或提问..."
-                @keydown.enter="handleEnter"
-                ref="commentInput"
-              ></textarea>
-              <div class="comment-tools">
-                <div class="emoji-selector">
-                  <button class="emoji-button" @click="toggleEmojiPicker">
-                    <span>😊</span>
-                  </button>
-                  <div class="emoji-picker" v-if="showEmojiPicker">
-                    <div v-for="emoji in emojis" :key="emoji" @click="addEmoji(emoji)" class="emoji">
-                      {{ emoji }}
-                    </div>
-                  </div>
-                </div>
-                <div class="format-buttons">
-                  <button title="加粗" @click="formatText('**', '**')">B</button>
-                  <button title="斜体" @click="formatText('*', '*')">I</button>
-                  <!-- <button title="代码" @click="formatText('`', '`')">{`{`}</button>
-                  <button title="代码块" @click="formatText('\n```typescript\n', '\n```')">{`{ }`}</button> -->
-                </div>
-                <button
-                  class="send-button"
-                  @click="addComment"
-                  :disabled="!newComment.trim() || !username.trim()"
-                >
-                  发送
-                  <span class="send-icon">↗</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 评论列表 -->
-        <transition-group name="comment-list" tag="div" class="comments-list">
-          <div v-for="(comment, index) in comments" :key="index" class="comment-item" :class="{ 'new-comment': index === 0 && isNewComment }">
-            <div class="comment-header">
-              <div class="user-avatar" :style="{ backgroundColor: generateAvatarColor(comment.username) }">
-                {{ comment.username.charAt(0).toUpperCase() }}
-              </div>
-              <div class="user-info">
-                <div class="username">{{ comment.username }}</div>
-                <div class="comment-time">{{ formatDate(comment.timestamp) }}</div>
-              </div>
-              <div class="like-button" @click="toggleLike(index)" :class="{ liked: comment.liked }">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="like-icon">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
-                </svg>
-                <span class="like-count">{{ comment.likes }}</span>
-              </div>
-            </div>
-            <div class="comment-content" v-html="formatComment(comment.text)"></div>
-            <div class="comment-actions">
-              <button class="reply-button" @click="replyToComment(index)">回复</button>
-            </div>
-          </div>
-        </transition-group>
-
-        <!-- 无评论提示 -->
-        <div v-if="comments.length === 0" class="no-comments">
-          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="empty-icon">
-            <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H5.17L4 17.17V4h16v12z" fill="currentColor" />
-            <path d="M12 15l1.57-3.43L17 10l-3.43-1.57L12 5l-1.57 3.43L7 10l3.43 1.57z" fill="currentColor" />
-          </svg>
-          <p>成为第一个评论的人！</p>
-        </div>
-      </div>
-    </transition>
-  </div>
-</template>
-
-<script setup>
-import { ref, computed, onMounted, nextTick, watch } from 'vue';
-import { useData, useRoute } from 'vitepress';
-import * as marked from 'marked';
-
-// 使用VitePress提供的dark模式状态
-const { isDark } = useData();
-const route = useRoute();
-
-// 组件状态
-const showComments = ref(false);
-const showEmojiPicker = ref(false);
-const newComment = ref('');
-const username = ref('');
-const comments = ref([]);
-const isNewComment = ref(false);
-const commentInput = ref(null);
-
-// 表情列表
-const emojis = ['😊', '👍', '🎉', '🤔', '😄', '❤️', '👏', '🔥', '✨', '🚀', '💡', '💯'];
-
-// 页面路径作为评论的唯一标识
-const pageKey = computed(() => {
-  return route.path;
-});
-
-// 是否为深色模式
-const isDarkMode = computed(() => {
-  return isDark.value;
-});
-
-// 初始化时加载评论
-onMounted(() => {
-  // 从localStorage获取用户名
-  const savedUsername = localStorage.getItem('ts-challenge-username');
-  if (savedUsername) {
-    username.value = savedUsername;
-  }
-// 加载评论 (使用localStorage模拟数据存储)
-
-
-  // 加载评论
-  loadComments();
-
-  // 自动展开评论区如果有评论
-  if (comments.value.length > 0) {
-    showComments.value = true;
-  }
-});
-const loadComments = () => {
-  const key = `ts-challenge-comments-${pageKey.value}`;
-  const savedComments = localStorage.getItem(key);
-
-  if (savedComments) {
-    comments.value = JSON.parse(savedComments);
-  } else {
-    comments.value = [];
-  }
-};
-// 当路由变化时，加载对应页面的评论
-watch(() => route.path, () => {
-  loadComments();
-}, { immediate: true });
-
-
-// 保存评论
-const saveComments = () => {
-  const key = `ts-challenge-comments-${pageKey.value}`;
-  localStorage.setItem(key, JSON.stringify(comments.value));
-};
-
-// 添加新评论
-const addComment = () => {
-  if (!newComment.value.trim() || !username.value.trim()) return;
-
-  // 保存用户名
-  localStorage.setItem('ts-challenge-username', username.value);
-
-  // 创建新评论
-  const comment = {
-    username: username.value,
-    text: newComment.value,
-    timestamp: new Date().toISOString(),
-    likes: 0,
-    liked: false
-  };
-
-  // 添加到评论列表前端
-  comments.value.unshift(comment);
-
-  // 保存评论
-  saveComments();
-
-  // 动画效果
-  isNewComment.value = true;
-  setTimeout(() => {
-    isNewComment.value = false;
-  }, 2000);
-
-  // 清空输入框
-  newComment.value = '';
-};
-
-// 切换评论区显示状态
-const toggleComments = () => {
-  showComments.value = !showComments.value;
-};
-
-// 切换表情选择器显示状态
-const toggleEmojiPicker = () => {
-  showEmojiPicker.value = !showEmojiPicker.value;
-};
-
-// 为用户名生成一个一致的颜色
-const generateAvatarColor = (name) => {
-  if (!name) return '#7e57c2';
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    hash = name.charCodeAt(i) + ((hash << 5) - hash);
-  }
-  const colors = [
-    '#ec4899', '#f97316', '#8b5cf6', '#06b6d4', '#10b981',
-    '#3b82f6', '#f43f5e', '#14b8a6', '#8b5cf6', '#a855f7'
-  ];
-  return colors[Math.abs(hash) % colors.length];
-};
-
-// 添加表情到评论
-const addEmoji = (emoji) => {
-  newComment.value += emoji;
-  showEmojiPicker.value = false;
-  if (commentInput.value) {
-    commentInput.value.focus();
-  }
-};
-
-// 格式化文本（添加 Markdown 格式）
-const formatText = (prefix, suffix) => {
-  if (!commentInput.value) return;
-
-  const textarea = commentInput.value;
-  const start = textarea.selectionStart;
-  const end = textarea.selectionEnd;
-  const selectedText = newComment.value.substring(start, end);
-
-  newComment.value =
-    newComment.value.substring(0, start) +
-    prefix + selectedText + suffix +
-    newComment.value.substring(end);
-
-  // 光标位置调整
-  nextTick(() => {
-    textarea.focus();
-    textarea.selectionStart = textarea.selectionEnd =
-      start + prefix.length + selectedText.length + suffix.length;
-  });
-};
-
-// 在按下回车键时处理
-const handleEnter = (e) => {
-  // 如果按下Shift+Enter，则插入换行而不是提交
-  if (!e.shiftKey) {
-    e.preventDefault();
-    addComment();
-  }
-};
-
-// 点赞/取消点赞
-const toggleLike = (index) => {
-  comments.value[index].liked = !comments.value[index].liked;
-  comments.value[index].likes += comments.value[index].liked ? 1 : -1;
-  saveComments();
-};
-
-// 回复评论
-const replyToComment = (index) => {
-  const comment = comments.value[index];
-  if (!comment) return;
-
-  // 添加@用户名到输入框
-  const replyPrefix = `@${comment.username} `;
-  if (!newComment.value.includes(replyPrefix)) {
-    newComment.value = replyPrefix + newComment.value;
-  }
-
-  // 聚焦输入框
-  if (commentInput.value) {
-    commentInput.value.focus();
-  }
-
-  // 确保评论区已展开
-  showComments.value = true;
-};
-
-// 格式化Markdown内容 (安全处理)
-const formatComment = (text) => {
-  if (!text) return '';
-
-  // 处理@用户名
-  text = text.replace(/@(\w+)/g, '<span class="mention">@$1</span>');
-
-  // 处理emoji (保留原样)
-  text = text.replace(/:([\w+-]+):/g, (match, emoji) => {
-    return match;
-  });
-
-  // 使用marked处理Markdown
-  let html = marked.parse(text);
-
-  // 对HTML进行基本安全处理 (在生产环境中应使用DOMPurify等库)
-  html = html.replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, '');
-
-  return html;
-};
-
-// 格式化时间显示
-const formatDate = (timestamp) => {
-  if (!timestamp) return '';
-
-  const date = new Date(timestamp);
-  const now = new Date();
-  const diff = Math.floor((now - date) / 1000); // 秒数差
-
-  if (diff < 60) {
-    return '刚刚';
-  } else if (diff < 3600) {
-    return `${Math.floor(diff / 60)}分钟前`;
-  } else if (diff < 86400) {
-    return `${Math.floor(diff / 3600)}小时前`;
-  } else if (diff < 2592000) {
-    return `${Math.floor(diff / 86400)}天前`;
-  } else {
-    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
-  }
-};
-</script>
-
 <style scoped>
 .comment-section {
   margin: 3rem 0;
@@ -405,6 +69,50 @@ const formatDate = (timestamp) => {
   padding: 0 0.5rem;
   font-size: 0.875rem;
   margin-left: 0.5rem;
+}
+
+.section-controls {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.notification-bell, .bookmark-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  color: #6b7280;
+  position: relative;
+  transition: all 0.2s ease;
+}
+
+.notification-bell:hover, .bookmark-button:hover {
+  color: #ec4899;
+  background-color: rgba(236, 72, 153, 0.1);
+}
+
+.notification-badge {
+  position: absolute;
+  top: -5px;
+  right: -5px;
+  background-color: #ef4444;
+  color: white;
+  border-radius: 50%;
+  min-width: 18px;
+  height: 18px;
+  font-size: 0.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #f3f4f6;
+}
+
+.dark-mode .notification-badge {
+  border-color: #262626;
 }
 
 .toggle-icon {
@@ -705,7 +413,13 @@ const formatDate = (timestamp) => {
   color: #6b7280;
 }
 
-.like-button {
+.comment-actions-top {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.like-button, .comment-actions-top .bookmark-button {
   display: flex;
   align-items: center;
   gap: 0.25rem;
@@ -716,15 +430,15 @@ const formatDate = (timestamp) => {
   transition: all 0.2s;
 }
 
-.dark-mode .like-button {
+.dark-mode .like-button, .dark-mode .comment-actions-top .bookmark-button {
   background-color: #333;
 }
 
-.like-button:hover {
+.like-button:hover, .comment-actions-top .bookmark-button:hover {
   background-color: #e5e7eb;
 }
 
-.dark-mode .like-button:hover {
+.dark-mode .like-button:hover, .dark-mode .comment-actions-top .bookmark-button:hover {
   background-color: #444;
 }
 
@@ -737,18 +451,31 @@ const formatDate = (timestamp) => {
   background-color: rgba(239, 68, 68, 0.2);
 }
 
-.like-icon {
+.comment-actions-top .bookmark-button.bookmarked {
+  background-color: #dbeafe;
+  color: #3b82f6;
+}
+
+.dark-mode .comment-actions-top .bookmark-button.bookmarked {
+  background-color: rgba(59, 130, 246, 0.2);
+}
+
+.like-icon, .bookmark-icon {
   width: 16px;
   height: 16px;
   color: #6b7280;
 }
 
-.dark-mode .like-icon {
+.dark-mode .like-icon, .dark-mode .bookmark-icon {
   color: #9ca3af;
 }
 
 .like-button.liked .like-icon {
   color: #ef4444;
+}
+
+.comment-actions-top .bookmark-button.bookmarked .bookmark-icon {
+  color: #3b82f6;
 }
 
 .like-count {
@@ -905,5 +632,269 @@ const formatDate = (timestamp) => {
   .send-button {
     margin-left: auto;
   }
+
+  .section-controls {
+    gap: 0.5rem;
+  }
+
+  .notification-bell, .bookmark-button {
+    width: 28px;
+    height: 28px;
+  }
 }
 </style>
+
+<template>
+  <div class="comment-section">
+    <div class="section-title" @click="toggleComments">
+      <h2>Comments</h2>
+      <span class="comment-count">{{ comments.length }}</span>
+    </div>
+    <div class="section-controls">
+      <notification-bell />
+      <bookmark-button />
+    </div>
+    <CommentSearch
+      v-if="showComments"
+      :comments="comments"
+      :userProfile="userProfile"
+      @update:filtered-comments="filteredComments = $event"
+      class="comment-search-container"
+    />
+    <div v-if="showUserProfile">
+      <UserProfile @close="showUserProfile = false" @update:profile="updateUserProfile" />
+      <div class="overlay" @click="showUserProfile = false"></div>
+    </div>
+    <div class="comments-container" v-if="showComments">
+      <transition-group name="comment-list" tag="div" class="comments-list">
+        <div v-for="(comment, index) in displayedComments" :key="comment.id || index" class="comment-item" :class="{ 'new-comment': index === 0 && isNewComment }">
+          <div class="comment-header">
+            <div
+              class="user-avatar"
+              :style="{
+                backgroundColor: comment.userColor || generateAvatarColor(comment.username),
+                backgroundImage: comment.userAvatar ? `url(${comment.userAvatar})` : 'none'
+              }"
+            >
+              <span v-if="!comment.userAvatar">{{ comment.username.charAt(0).toUpperCase() }}</span>
+            </div>
+            <div class="user-info">
+              <div class="username-row">
+                <div class="username">{{ comment.username }}</div>
+                <div v-if="comment.skillLevel" class="user-skill-badge" :class="comment.skillLevel">
+                  {{ getUserSkillLabel(comment.skillLevel) }}
+                </div>
+              </div>
+              <div class="comment-time">{{ formatDate(comment.timestamp) }}</div>
+              <div v-if="comment.bio" class="user-bio">{{ truncateBio(comment.bio) }}</div>
+            </div>
+            <div class="comment-actions-top">
+              <div class="like-button" @click="toggleLike(getOriginalIndex(comment))" :class="{ liked: comment.liked }">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="like-icon">
+                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" fill="currentColor" />
+                </svg>
+                <span class="like-count">{{ comment.likes }}</span>
+              </div>
+              <div class="bookmark-button" @click="toggleBookmark(comment, getOriginalIndex(comment))" :class="{ bookmarked: isBookmarked(comment) }">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="bookmark-icon">
+                  <path fill="none" d="M0 0h24v24H0z"/>
+                  <path d="M5 2h14a1 1 0 0 1 1 1v19.143a.5.5 0 0 1-.766.424L12 18.03l-7.234 4.536A.5.5 0 0 1 4 22.143V3a1 1 0 0 1 1-1zm2 2v15.432l5-3.761 5 3.761V4H7z" fill="currentColor"/>
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div class="comment-content" v-html="formatComment(comment.text)"></div>
+          <div class="comment-actions">
+            <button class="reply-button" @click="replyToComment(getOriginalIndex(comment))">回复</button>
+
+            <div v-if="comment.tags && comment.tags.length > 0" class="user-tags">
+              <div v-for="(tag, tagIndex) in comment.tags" :key="tagIndex" class="user-tag">
+                {{ tag }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </transition-group>
+    </div>
+  </div>
+</template>
+
+<script>
+import { ref, computed, onMounted } from 'vue';
+import UserProfile from './UserProfile.vue';
+import CommentSearch from './CommentSearch.vue';
+
+export default {
+  components: {
+    UserProfile,
+    CommentSearch,
+  },
+  setup() {
+    const showUserProfile = ref(false);
+    const userProfile = ref(null);
+    const filteredComments = ref([]);
+    const comments = ref([]); // Assuming comments is defined and fetched elsewhere
+    const newComment = ref('');
+    const username = ref('');
+    const isNewComment = ref(false);
+    const showComments = ref(true);
+
+    const displayedComments = computed(() => {
+      return filteredComments.value.length > 0 ? filteredComments.value : comments.value;
+    });
+
+    onMounted(() => {
+      // (existing code)
+
+      // Load user profile
+      loadUserProfile();
+    });
+
+    // Load user profile
+    const loadUserProfile = () => {
+      const savedProfile = localStorage.getItem('ts-challenge-user-profile');
+      if (savedProfile) {
+        userProfile.value = JSON.parse(savedProfile);
+      }
+    };
+
+    // Update user profile
+    const updateUserProfile = (profile) => {
+      userProfile.value = profile;
+
+      // Update the username in the form
+      username.value = profile.username;
+
+      // Update any existing comments by this user
+      const updatedComments = comments.value.map(comment => {
+        if (comment.username.toLowerCase() === profile.username.toLowerCase()) {
+          return {
+            ...comment,
+            userAvatar: profile.avatar,
+            userColor: profile.color,
+            bio: profile.bio,
+            skillLevel: profile.skillLevel,
+            tags: profile.tags
+          };
+        }
+        return comment;
+      });
+
+      comments.value = updatedComments;
+      saveComments();
+    };
+
+    // Add user profile info to comment
+    const addUserProfileToComment = (comment) => {
+      if (userProfile.value) {
+        comment.userAvatar = userProfile.value.avatar;
+        comment.userColor = userProfile.value.color;
+        comment.bio = userProfile.value.bio;
+        comment.skillLevel = userProfile.value.skillLevel;
+        comment.tags = userProfile.value.tags;
+      }
+      return comment;
+    };
+
+    // Get original index from filtered comments
+    const getOriginalIndex = (comment) => {
+      // If not filtered, just return the index from the comments array
+      if (filteredComments.value.length === 0) {
+        return comments.value.findIndex(c =>
+          (c.id && c.id === comment.id) ||
+          (!c.id && c.timestamp === comment.timestamp)
+        );
+      }
+
+      // Find the original comment in the comments array
+      const originalComment = comments.value.find(c =>
+        (c.id && c.id === comment.id) ||
+        (!c.id && c.timestamp === comment.timestamp)
+      );
+
+      return comments.value.indexOf(originalComment);
+    };
+
+    // Get user skill level label
+    const getUserSkillLabel = (skillLevel) => {
+      const labels = {
+        'beginner': '初学者',
+        'intermediate': '中级',
+        'advanced': '高级',
+        'expert': '专家'
+      };
+      return labels[skillLevel] || skillLevel;
+    };
+
+    // Truncate bio text
+    const truncateBio = (bio, maxLength = 50) => {
+      if (!bio) return '';
+      if (bio.length <= maxLength) return bio;
+      return bio.substring(0, maxLength) + '...';
+    };
+
+    // Modify addComment function to include user profile data
+    const addComment = () => {
+      if (!newComment.value.trim() || !username.value.trim()) return;
+
+      // 保存用户名
+      localStorage.setItem('ts-challenge-username', username.value);
+
+      // 创建新评论
+      let comment = {
+        id: Date.now(),
+        username: username.value,
+        text: newComment.value,
+        timestamp: new Date().toISOString(),
+        likes: 0,
+        liked: false,
+        pagePath: route.path
+      };
+
+      // Add user profile info
+      comment = addUserProfileToComment(comment);
+
+      // 添加到评论列表前端
+      comments.value.unshift(comment);
+
+      // 如果这是回复某条评论
+      if (replyingToCommentId.value) {
+        // 发送通知给被回复的用户
+        sendReplyNotification(replyingToCommentId.value, comment);
+        replyingToCommentId.value = null;
+      }
+
+      // 保存评论
+      saveComments();
+
+      // 动画效果
+      isNewComment.value = true;
+      setTimeout(() => {
+        isNewComment.value = false;
+      }, 2000);
+
+      // 清空输入框
+      newComment.value = '';
+    };
+
+    return {
+      showUserProfile,
+      userProfile,
+      filteredComments,
+      comments,
+      newComment,
+      username,
+      isNewComment,
+      showComments,
+      displayedComments,
+      loadUserProfile,
+      updateUserProfile,
+      addUserProfileToComment,
+      getOriginalIndex,
+      getUserSkillLabel,
+      truncateBio,
+      addComment,
+    };
+  }
+};
+</script>

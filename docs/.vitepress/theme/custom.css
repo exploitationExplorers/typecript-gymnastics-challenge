@@ -2,7 +2,7 @@
  * 自定义CSS - TypeScript类型挑战网站
  */
 
-:root {
+ :root {
   /* TypeScript蓝色调色板 - 浅色模式 */
   --ts-blue: #3178c6;
   --ts-blue-light: #4d8ddd;
@@ -35,6 +35,13 @@
 
   /* 主页英雄区样式 */
   --vp-home-hero-name-color: var(--ts-blue);
+
+  /* 通知系统和书签管理相关样式 */
+  --notification-badge-color: #ef4444;
+  --bookmark-primary-color: #3b82f6;
+  --bookmark-light-bg: #dbeafe;
+  --notification-light-bg: #f0f9ff;
+  --notification-primary-color: #0ea5e9;
 }
 
 /* 深色模式覆盖 */
@@ -62,6 +69,9 @@
   /* 代码块样式 - 深色模式 */
   --vp-code-block-bg: #1e1e1e;
   --vp-code-line-highlight-color: rgba(77, 141, 221, 0.15);
+
+  --bookmark-light-bg: rgba(59, 130, 246, 0.2);
+  --notification-light-bg: rgba(14, 165, 233, 0.15);
 }
 
 /* 主题颜色切换过渡效果 */
@@ -341,6 +351,15 @@ div[class*='language-'] code:hover .line::before {
     padding-right: 0.75rem;
     margin-right: 0.75rem;
   }
+
+  .notifications-container,
+  .bookmark-manager {
+    width: 100%;
+    left: 0;
+    right: 0;
+    max-width: 100%;
+    border-radius: 0;
+  }
 }
 
 /* 平板适配 */
@@ -348,4 +367,76 @@ div[class*='language-'] code:hover .line::before {
   .VPContent {
     padding: 0 24px !important;
   }
+}
+
+/* 全局通知覆盖层 */
+.notification-system-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.2);
+  z-index: 90;
+  display: none;
+}
+
+.notification-system-overlay.active {
+  display: block;
+}
+
+/* 全局消息通知 */
+.global-notification {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  padding: 12px 16px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  color: #333;
+  font-size: 14px;
+  z-index: 9999;
+  transition: all 0.3s ease;
+  transform: translateY(20px);
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.global-notification.show {
+  transform: translateY(0);
+  opacity: 1;
+}
+
+.global-notification .icon {
+  font-size: 18px;
+  flex-shrink: 0;
+}
+
+.global-notification.success {
+  background-color: #10b981;
+  color: white;
+}
+
+.global-notification.info {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.global-notification.warning {
+  background-color: #f59e0b;
+  color: white;
+}
+
+.global-notification.error {
+  background-color: #ef4444;
+  color: white;
+}
+
+.dark .global-notification {
+  background-color: #262626;
+  color: #f3f4f6;
 }

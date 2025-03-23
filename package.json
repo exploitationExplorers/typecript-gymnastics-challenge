@@ -4,7 +4,7 @@
   "description": "Learn TypeScript type system through challenges",
   "main": "index.js",
   "scripts": {
-    "dev": "npx vitepress dev docs --host 0.0.0.0",
+    "dev": "npx vitepress dev docs --port 4173",
     "build": "npx vitepress build docs",
     "preview": "npx vitepress preview docs"
   },
