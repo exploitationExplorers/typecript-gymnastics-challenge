@@ -1,60 +1,31 @@
 ---
+# https://vitepress.dev/reference/default-theme-home-page
 layout: home
----
-
-<script>
-// 根据浏览器语言自动跳转
-const userLang = navigator.language || navigator.userLanguage;
-const isZh = userLang.startsWith('zh');
-window.location.href = isZh ? '/zh/' : '/en/';
-</script>
-
-<!-- 如果JavaScript被禁用，显示下面的内容 -->
-<noscript>
-  <h1>选择语言 | Choose Language</h1>
-  <ul>
-    <li><a href="/zh/">中文</a></li>
-    <li><a href="/en/">English</a></li>
-  </ul>
-</noscript>
 
 hero:
-  name: TypeScript Challenges
-  text: Master TypeScript Type System
-  tagline: Learn advanced TypeScript types through practice
+  name: "TypeScript chanllages"
+  text: "🚀TypeScript 挑战🚀"
+  tagline: TypeScript 类型体操挑战，帮助你提高类型编程能力
+  image:
+    src: /logo.png
+    alt: VitePress
   actions:
     - theme: brand
-      text: Start Learning
-      link: /easy/implement-pick
+      text: ✨开始挑战
+      link: /challenges/
     - theme: alt
-      text: Common Techniques
-      link: /common/type-equality
+      text: 📝学习指南
+      link: /guide/
+    - theme: alt
+      text: ⭐star支持
+      link: https://github.com/exploitationExplorers/typecript-gymnastics-challenge
+
 features:
-  - title: Comprehensive Content
-    details: Master the TypeScript type system with a comprehensive set of exercises and examples
-  - title: Progressive Learning
-    details: Challenges range from simple to complex, helping you gradually improve your TypeScript skills
-  - title: In-depth Explanations
-    details: Each challenge comes with detailed explanations and step-by-step solutions
+  - title: 🧩循序渐进
+    details: 从简单到困难的挑战，逐步提升你的类型体操技能
+  - title: 🔍实例详解
+    details: 每个挑战都有详细的解释和多种解决方案
+  - title: 🧪在线练习
+    details: 直接在浏览器中编写和测试你的类型解决方案
 ---
 
-# TypeScript Type Challenges
-
-Welcome to the TypeScript Type Challenges collection! This site is designed to help you improve your understanding of TypeScript's type system through practical exercises.
-
-## Getting Started
-
-If you're new to TypeScript types, start with the [Easy Challenges](/easy/implement-pick) to build a solid foundation.
-
-## Challenge Levels
-
-The challenges are organized by difficulty:
-
-- **Easy**: Basic type manipulations
-- **Medium**: More advanced type operations
-- **Hard**: Complex type puzzles
-- **Common**: Useful techniques for everyday TypeScript development
-
-## Contributing
-
-This site is open source. Feel free to contribute new challenges or improve existing ones by submitting a pull request to our [GitHub repository](https://github.com/your-username/typescript-challenges).
