@@ -29,3 +29,5 @@ features:
     details: 直接在浏览器中编写和测试你的类型解决方案
 ---
 
+
+<Confetti />
