@@ -8,6 +8,9 @@ importers:
 
   .:
     devDependencies:
+      '@types/dom-view-transitions':
+        specifier: ^1.0.6
+        version: 1.0.6
       canvas-confetti:
         specifier: ^1.9.3
         version: 1.9.3
@@ -525,6 +528,9 @@ packages:
 
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
+
+  '@types/dom-view-transitions@1.0.6':
+    resolution: {integrity: sha512-Q5IoDouTOcZKEs4nDpmUti2MXP48MQDBkS2nUQKFrsDeTFIaArVmhWUon28vlDfNkbbaK4EROu4Fv0iKObWjSg==}
 
   '@types/estree@1.0.6':
     resolution: {integrity: sha512-AYnb1nQyY49te+VRAVgmzfcgjYS91mY5P0TKUDCLEM+gNnA+3T6rWITXRLYCpahpqSQbN5cE+gHpnPyXjHWxcw==}
@@ -1431,6 +1437,8 @@ snapshots:
       '@types/hast': 3.0.4
 
   '@shikijs/vscode-textmate@10.0.2': {}
+
+  '@types/dom-view-transitions@1.0.6': {}
 
   '@types/estree@1.0.6': {}
 

@@ -7,7 +7,10 @@ import { useRoute } from 'vitepress';
 import 'virtual:group-icons.css' 
 import "./style/index.css"; //引入自定义的样式
 import Confetti from './components/Confetti.vue'
-import tags from './components/tags.vue'
+import tags from './components/layoutTag.vue'
+import hTag from './components/hTag.vue'
+import MyLayout from './components/MyLayout.vue';
+import HomeSponsors from './components/HomeSponsors.vue'
 export default {
   extends: DefaultTheme,
   setup() {
@@ -28,9 +31,11 @@ export default {
   },
   // Layout: () => {
   //   return h(DefaultTheme.Layout, null, {
+  //     'doc-before': () => h(hTag),
   //   })
+    
   // },
-  Layout: tags,
+  Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
     app.component('Confetti', Confetti)
     // ...

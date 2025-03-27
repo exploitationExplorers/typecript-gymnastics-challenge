@@ -8,11 +8,7 @@ const { frontmatter } = useData()
 </script>
 
 <template>
-  <Layout>
-    <template #doc-before>
-      <span class="date">🔥&nbsp;更新时间：{{ frontmatter.date }}</span>
-    </template>
-  </Layout>
+    <span class="date">🔥&nbsp;更新时间：{{ frontmatter.date }}</span>
 </template>
 
 <style>
