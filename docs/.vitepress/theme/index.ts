@@ -1,11 +1,10 @@
-// https://vitepress.dev/guide/custom-theme
 import { h } from 'vue'
 import type { Theme } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import mediumZoom from 'medium-zoom';
 import { onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vitepress';
- //import './style.css'
+import 'virtual:group-icons.css' 
 import "./style/index.css"; //引入自定义的样式
 import Confetti from './components/Confetti.vue'
 export default {

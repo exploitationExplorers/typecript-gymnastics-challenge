@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { groupIconMdPlugin, groupIconVitePlugin, localIconLoader } from 'vitepress-plugin-group-icons'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "TypeScript chanllages",
@@ -49,6 +50,7 @@ export default defineConfig({
         },
         link: 'https://github.com/exploitationExplorers/typecript-gymnastics-challenge'
       }
+     
     ],
 
     search: {
@@ -73,11 +75,26 @@ export default defineConfig({
     },
   },
   markdown: {
+    config(md) {
+      md.use(groupIconMdPlugin)
+    },
     // toc显示1-6级标题
     toc: {level: [1,2,3,4,5,6]},
     image: {
       lazyLoading: true  // 开启图片懒加载
       
     }
+  },
+  vite: {
+    plugins: [groupIconVitePlugin(
+      {
+        customIcon: {
+          ts: localIconLoader(import.meta.url, '../public/svg/ts.svg'), //本地ts图标导入
+          js: 'logos:javascript', //js图标
+          md: 'logos:markdown', //markdown图标
+          css: 'logos:css-3', //css图标
+        },
+      }
+    )]
   }
 })
