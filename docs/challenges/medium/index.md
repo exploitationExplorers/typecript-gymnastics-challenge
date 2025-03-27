@@ -20,6 +20,7 @@ const fn = (v: boolean) => {
 type a = MyReturnType<typeof fn> // 应该是 1 | 2
 ```
 
+
 **解决方案**：
 ```typescript
 type MyReturnType<T extends (...args: any[]) => any> =
@@ -55,7 +56,7 @@ type Expected = {
   readonly y: 'hey'
 }
 
-type Todo = DeepReadonly<X> // should be same as `Expected`
+type Todo = DeepReadonly<X> 
 ```
 
 **解决方案**：
@@ -66,7 +67,7 @@ type DeepReadonly<T> = {
       ? T[P]
       : DeepReadonly<T[P]>
     : T[P]
-}
+}  // [!code focus]
 ```
 
 **解释**：

@@ -21,6 +21,7 @@ hero:
       link: https://github.com/exploitationExplorers/typecript-gymnastics-challenge
 
 features:
+
   - title: 🧩循序渐进
     details: 从简单到困难的挑战，逐步提升你的类型体操技能
   - title: 🔍实例详解

@@ -11,6 +11,7 @@ export default defineConfig({
       { text: '🎉首页', link: '/' },
       { text: '⚡️挑战', link: '/challenges/' },
       { text: '🧭学习指南', link: '/guide/' },
+      { text: '👥关于我们', link: '/about'},
       { text: '📆 更新日志', link: '/update-log' }
     ],
 
@@ -70,5 +71,13 @@ export default defineConfig({
         },
       },
     },
+  },
+  markdown: {
+    // toc显示1-6级标题
+    toc: {level: [1,2,3,4,5,6]},
+    image: {
+      lazyLoading: true  // 开启图片懒加载
+      
+    }
   }
 })
