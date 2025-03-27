@@ -5,6 +5,8 @@ import { useData } from 'vitepress'
 import DefaultTheme from 'vitepress/theme'
 import { nextTick, provide } from 'vue'
 import hTag from './hTag.vue'
+import Mouse from './Mouse.vue'
+import MouseFollower from './MouseFollower.vue'
 const { isDark } = useData()
 
 const enableTransitions = () =>
@@ -44,6 +46,10 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
 <template>
   <DefaultTheme.Layout>
     <!-- 这里可以插入其他插槽组件 -->
+    <template #layout-top>
+      <MouseFollower />
+      <Mouse />
+    </template>
     <template #doc-before>
       <hTag />
     </template>

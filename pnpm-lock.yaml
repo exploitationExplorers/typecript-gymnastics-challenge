@@ -8,9 +8,15 @@ importers:
 
   .:
     devDependencies:
+      '@types/animejs':
+        specifier: ^3.1.13
+        version: 3.1.13
       '@types/dom-view-transitions':
         specifier: ^1.0.6
         version: 1.0.6
+      animejs:
+        specifier: ^3.2.2
+        version: 3.2.2
       busuanzi.pure.js:
         specifier: ^1.0.3
         version: 1.0.3
@@ -535,6 +541,9 @@ packages:
   '@shikijs/vscode-textmate@10.0.2':
     resolution: {integrity: sha512-83yeghZ2xxin3Nj8z1NMd/NCuca+gsYXswywDy5bHvwlWL8tpTQmzGeUuHd9FC3E/SBEMvzJRwWEOz5gGes9Qg==}
 
+  '@types/animejs@3.1.13':
+    resolution: {integrity: sha512-yWg9l1z7CAv/TKpty4/vupEh24jDGUZXv4r26StRkpUPQm04ztJaftgpto8vwdFs8SiTq6XfaPKCSI+wjzNMvQ==}
+
   '@types/dom-view-transitions@1.0.6':
     resolution: {integrity: sha512-Q5IoDouTOcZKEs4nDpmUti2MXP48MQDBkS2nUQKFrsDeTFIaArVmhWUon28vlDfNkbbaK4EROu4Fv0iKObWjSg==}
 
@@ -668,6 +677,9 @@ packages:
   algoliasearch@5.23.0:
     resolution: {integrity: sha512-7TCj+hLx6fZKppLL74lYGDEltSBNSu4vqRwgqeIKZ3VQ0q3aOrdEN0f1sDWcvU1b+psn2wnl7aHt9hWtYatUUA==}
     engines: {node: '>= 14.0.0'}
+
+  animejs@3.2.2:
+    resolution: {integrity: sha512-Ao95qWLpDPXXM+WrmwcKbl6uNlC5tjnowlaRYtuVDHHoygjtIPfDUoK9NthrlZsQSKjZXlmji2TrBUAVbiH0LQ==}
 
   birpc@0.2.19:
     resolution: {integrity: sha512-5WeXXAvTmitV1RqJFppT5QtUiz2p1mRSYU000Jkft5ZUCLJIk4uQriYNO50HknxKwM6jd8utNc66K1qGIwwWBQ==}
@@ -1450,6 +1462,8 @@ snapshots:
 
   '@shikijs/vscode-textmate@10.0.2': {}
 
+  '@types/animejs@3.1.13': {}
+
   '@types/dom-view-transitions@1.0.6': {}
 
   '@types/estree@1.0.6': {}
@@ -1598,6 +1612,8 @@ snapshots:
       '@algolia/requester-browser-xhr': 5.23.0
       '@algolia/requester-fetch': 5.23.0
       '@algolia/requester-node-http': 5.23.0
+
+  animejs@3.2.2: {}
 
   birpc@0.2.19: {}
 

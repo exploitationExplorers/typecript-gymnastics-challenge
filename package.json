@@ -13,7 +13,9 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/animejs": "^3.1.13",
     "@types/dom-view-transitions": "^1.0.6",
+    "animejs": "^3.2.2",
     "busuanzi.pure.js": "^1.0.3",
     "canvas-confetti": "^1.9.3",
     "medium-zoom": "^1.1.0",

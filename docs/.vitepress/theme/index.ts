@@ -10,6 +10,8 @@ import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件
 import 'nprogress-v2/dist/index.css' // 进度条样式
 import Confetti from './components/Confetti.vue'
 import MyLayout from './components/MyLayout.vue';
+import Mouse from './components/Mouse.vue';
+import MouseFollower from './components/MouseFollower.vue';
 // 不蒜子
 import { inBrowser } from 'vitepress' 
 import busuanzi from 'busuanzi.pure.js'
@@ -45,6 +47,8 @@ export default {
   Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
     app.component('Confetti', Confetti)
+    app.component('Mouse', Mouse)  // 鼠标粒子效果
+    app.component('MouseFollower', MouseFollower)  // 鼠标跟随效果
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
       router.onBeforeRouteChange = () => {
