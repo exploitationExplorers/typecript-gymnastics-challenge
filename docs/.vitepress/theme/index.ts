@@ -6,11 +6,14 @@ import { onMounted, watch, nextTick } from 'vue';
 import { useRoute } from 'vitepress';
 import 'virtual:group-icons.css' 
 import "./style/index.css"; //引入自定义的样式
+import { NProgress } from 'nprogress-v2/dist/index.js' // 进度条组件
+import 'nprogress-v2/dist/index.css' // 进度条样式
 import Confetti from './components/Confetti.vue'
-// import tags from './components/layoutTag.vue'
-// import hTag from './components/hTag.vue'
 import MyLayout from './components/MyLayout.vue';
-import HomeSponsors from './components/HomeSponsors.vue'
+// 不蒜子
+import { inBrowser } from 'vitepress' 
+import busuanzi from 'busuanzi.pure.js'
+
 export default {
   extends: DefaultTheme,
   setup() {
@@ -38,6 +41,15 @@ export default {
   Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
     app.component('Confetti', Confetti)
-    // ...
+    if (inBrowser) {
+      NProgress.configure({ showSpinner: false })
+      router.onBeforeRouteChange = () => {
+        NProgress.start() // 开始进度条
+      }
+      router.onAfterRouteChange = () => {
+         busuanzi.fetch()
+         NProgress.done() // 停止进度条
+       }
+    }
   }
 } satisfies Theme

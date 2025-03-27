@@ -20,6 +20,9 @@ importers:
       medium-zoom:
         specifier: ^1.1.0
         version: 1.1.0
+      nprogress-v2:
+        specifier: ^1.1.10
+        version: 1.1.10
       sass:
         specifier: ^1.86.0
         version: 1.86.0
@@ -851,6 +854,9 @@ packages:
 
   node-addon-api@7.1.1:
     resolution: {integrity: sha512-5m3bsyrjFWE1xf7nz7YXdN4udnVtXK6/Yfgn5qnahL6bCkf2yKt4k3nuTKAtT4r3IG8JNR2ncsIMdZuAzJjHQQ==}
+
+  nprogress-v2@1.1.10:
+    resolution: {integrity: sha512-MypWLNIPIM07SS0bAc/oac0vhVFz9vAHm7d1sj//Pnf3J03LQ3CuWrlDteIu6exq0fIvkDJ6tUDRWLaifsIt5w==}
 
   oniguruma-to-es@3.1.1:
     resolution: {integrity: sha512-bUH8SDvPkH3ho3dvwJwfonjlQ4R80vjyvrU8YpxuROddv55vAEJrTuCuCVUhhsHbtlD9tGGbaNApGQckXhS8iQ==}
@@ -1792,6 +1798,8 @@ snapshots:
 
   node-addon-api@7.1.1:
     optional: true
+
+  nprogress-v2@1.1.10: {}
 
   oniguruma-to-es@3.1.1:
     dependencies:

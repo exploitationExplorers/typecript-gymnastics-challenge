@@ -1,3 +1,5 @@
+import "./chunk-JVWSFFO4.js";
+
 // node_modules/.pnpm/medium-zoom@1.1.0/node_modules/medium-zoom/dist/medium-zoom.esm.js
 var _extends = Object.assign || function(target) {
   for (var i = 1; i < arguments.length; i++) {
