@@ -11,6 +11,9 @@ importers:
       '@types/dom-view-transitions':
         specifier: ^1.0.6
         version: 1.0.6
+      busuanzi.pure.js:
+        specifier: ^1.0.3
+        version: 1.0.3
       canvas-confetti:
         specifier: ^1.9.3
         version: 1.9.3
@@ -669,6 +672,9 @@ packages:
   braces@3.0.3:
     resolution: {integrity: sha512-yQbXgO/OSZVD2IsiLlro+7Hf6Q18EJrKSEsdoMzKePKXct3gvD8oLcOQdIzGupr5Fj+EDe8gO/lxc1BzfMpxvA==}
     engines: {node: '>=8'}
+
+  busuanzi.pure.js@1.0.3:
+    resolution: {integrity: sha512-tPULdyx+8NNb9geZYDpktKmHAYx9f2LEOBaHyWCaM7iPEMIa/43KgYAUluuU7YG9UFSOFpj4dO7Nj2Vlu3V9Rg==}
 
   canvas-confetti@1.9.3:
     resolution: {integrity: sha512-rFfTURMvmVEX1gyXFgn5QMn81bYk70qa0HLzcIOSVEyl57n6o9ItHeBtUSWdvKAPY0xlvBHno4/v3QPrT83q9g==}
@@ -1593,6 +1599,8 @@ snapshots:
     dependencies:
       fill-range: 7.1.1
     optional: true
+
+  busuanzi.pure.js@1.0.3: {}
 
   canvas-confetti@1.9.3: {}
 

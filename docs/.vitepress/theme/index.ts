@@ -7,8 +7,8 @@ import { useRoute } from 'vitepress';
 import 'virtual:group-icons.css' 
 import "./style/index.css"; //引入自定义的样式
 import Confetti from './components/Confetti.vue'
-import tags from './components/layoutTag.vue'
-import hTag from './components/hTag.vue'
+// import tags from './components/layoutTag.vue'
+// import hTag from './components/hTag.vue'
 import MyLayout from './components/MyLayout.vue';
 import HomeSponsors from './components/HomeSponsors.vue'
 export default {

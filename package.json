@@ -14,6 +14,7 @@
   "license": "ISC",
   "devDependencies": {
     "@types/dom-view-transitions": "^1.0.6",
+    "busuanzi.pure.js": "^1.0.3",
     "canvas-confetti": "^1.9.3",
     "medium-zoom": "^1.1.0",
     "sass": "^1.86.0",
