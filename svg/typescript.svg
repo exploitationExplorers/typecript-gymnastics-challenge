@@ -1,0 +1,46 @@
+<svg width="500" height="500" viewBox="0 0 300 300" xmlns="http://www.w3.org/2000/svg">
+        <!-- Definitions for filters and gradients -->
+        <defs>
+          <!-- Glass effect filter -->
+          <filter id="glass-effect" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="4" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -7" result="glass" />
+            <feComposite in="SourceGraphic" in2="glass" operator="atop" />
+          </filter>
+          
+          <!-- Glow effect for TS logo -->
+          <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+            <feGaussianBlur stdDeviation="5" result="blur" />
+            <feColorMatrix in="blur" type="matrix" values="0 0 0 0 0  0 0.5 0 0 0.7  0 0.8 1 0 1  0 0 0 1 0" result="glow" />
+            <feMerge>
+              <feMergeNode in="glow" />
+              <feMergeNode in="SourceGraphic" />
+            </feMerge>
+          </filter>
+          
+          <!-- Reflection gradient -->
+          <linearGradient id="reflection" x1="0%" y1="0%" x2="0%" y2="100%">
+            <stop offset="0%" stop-color="rgba(255,255,255,0.1)" />
+            <stop offset="100%" stop-color="rgba(255,255,255,0.05)" />
+          </linearGradient>
+        </defs>
+        
+        <!-- Glass container with rounded corners -->
+        <rect x="50" y="50" width="200" height="200" rx="30" ry="30" 
+              fill="rgba(30,30,30,0.3)" 
+              stroke="rgba(150,150,150,0.2)" 
+              stroke-width="1" 
+              filter="url(#glass-effect)" />
+        
+        <!-- Bottom reflection -->
+        <ellipse cx="150" cy="250" rx="80" ry="10" fill="rgba(0,122,204,0.2)" filter="url(#glow)" />
+        
+        <!-- TypeScript logo -->
+        <g transform="translate(100, 100)">
+          <!-- Blue square background -->
+          <rect x="0" y="0" width="100" height="100" rx="5" ry="5" fill="#007ACC" filter="url(#glow)" />
+          
+          <!-- TS letters -->
+          <text x="50" y="65" font-family="Arial, sans-serif" font-size="50" font-weight="bold" fill="white" text-anchor="middle">TS</text>
+        </g>
+      </svg>
