@@ -13,6 +13,7 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@nolebase/vitepress-plugin-git-changelog": "^2.15.1",
     "@types/animejs": "^3.1.13",
     "@types/dom-view-transitions": "^1.0.6",
     "animejs": "^3.2.2",

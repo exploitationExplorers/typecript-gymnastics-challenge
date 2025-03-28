@@ -1,5 +1,6 @@
 import { defineConfig } from 'vitepress'
 import { groupIconMdPlugin, groupIconVitePlugin, localIconLoader } from 'vitepress-plugin-group-icons'
+import { GitChangelog, GitChangelogMarkdownSection } from '@nolebase/vitepress-plugin-git-changelog/vite'
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   title: "TypeScript chanllages",
@@ -86,7 +87,8 @@ export default defineConfig({
     }
   },
   vite: {
-    plugins: [groupIconVitePlugin(
+    plugins: [
+      groupIconVitePlugin(
       {
         customIcon: {
           ts: localIconLoader(import.meta.url, '../public/svg/ts.svg'), //本地ts图标导入
@@ -95,7 +97,12 @@ export default defineConfig({
           css: 'logos:css-3', //css图标
         },
       }
-    )]
+    ), 
+    GitChangelog({
+      repoURL: 'https://github.com/exploitationExplorers/typecript-gymnastics-challenge',
+    }),
+    GitChangelogMarkdownSection()
+  ]
   },
   base: '/typecript-gymnastics-challenge/'
 })

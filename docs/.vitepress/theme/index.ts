@@ -15,7 +15,11 @@ import MouseFollower from './components/MouseFollower.vue';
 // 不蒜子
 import { inBrowser } from 'vitepress' 
 import busuanzi from 'busuanzi.pure.js'
+import { 
+  NolebaseGitChangelogPlugin 
+} from '@nolebase/vitepress-plugin-git-changelog/client'
 
+import '@nolebase/vitepress-plugin-git-changelog/client/style.css'
 // 彩虹背景动画样式
 let homePageStyle: HTMLStyleElement | undefined
 
@@ -46,6 +50,7 @@ export default {
   // },
   Layout: MyLayout,
   enhanceApp({ app, router, siteData }) {
+    app.use(NolebaseGitChangelogPlugin)
     app.component('Confetti', Confetti)
     app.component('Mouse', Mouse)  // 鼠标粒子效果
     app.component('MouseFollower', MouseFollower)  // 鼠标跟随效果
