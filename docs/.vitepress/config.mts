@@ -97,5 +97,5 @@ export default defineConfig({
       }
     )]
   },
-  base: '/typescript-gymnastics-challenge/'
+  base: '/typecript-gymnastics-challenge/'
 })
