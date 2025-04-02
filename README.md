@@ -53,8 +53,7 @@ npm test
 欢迎提交PR！请参考：
 
 1. 在 src/challenges/ 目录创建新挑战
-2. 在 src/tests/ 添加对应测试用例
-3. 更新 docs/ 中的文档说明
+2. 更新 docs/ 中的文档说明
 
 
 ## 📄 许可证
