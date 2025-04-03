@@ -4,7 +4,7 @@ title: AppendToObject
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 实现一个为接口添加一个新字段的类型。该类型接收三个参数，返回带有新字段的接口类型。
 
@@ -15,11 +15,11 @@ type Test = { id: '1' };
 type Result = AppendToObject<Test, 'value', 4>; // expected to be { id: '1', value: 4 }
 ```
 
-## 分析
+## 🔍 分析
 
-这题操作的类型时对象，在对象上新增属性，相比较之前的 [实现 Omit](/medium/实现Omit.md) 要简单很多，只需要根据传入的参数生成新的类型，同当前类型交叉即可得到结果。
+这题操作的类型时对象，在对象上新增属性，相比较之前的 [实现 Omit](./Omit.md) 要简单很多，只需要根据传入的参数生成新的类型，同当前类型交叉即可得到结果。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type Merge<T> = {
@@ -66,7 +66,7 @@ type Case1 = Equal<A, B> extends true ? true : false;
 type Case2 = Equal<A, Merge<B>> extends true ? true : false;
 ```
 
-## 知识点
+## 💡 知识点
 
 1. 对象交叉
 2. 交叉后的对象 Merge

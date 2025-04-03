@@ -4,7 +4,7 @@ title: 实现Trim
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 实现`Trim<T>`，它是一个字符串类型，并返回一个新字符串，其中两端的空白符都已被删除。
 
@@ -14,7 +14,7 @@ title: 实现Trim
 type trimed = Trim<'  Hello World  '>; // expected to be 'Hello World'
 ```
 
-## 分析
+## 🔍 分析
 
 这个题目其实和上一题比较类似，只是需要把两边的空白字符都去掉。
 
@@ -32,7 +32,7 @@ type TrimRight<T extends string> = T extends `${infer R}${' ' | '\n' | '\t'}`
 type Trim<T extends string> = TrimRight<TrimLeft<T>>;
 ```
 
-## 题解
+## 🛠️ 题解
 
 当然，除了上述方案，还有更简单的方法：
 
@@ -46,6 +46,6 @@ type Trim<S extends string> = S extends
 
 本质就是把两次判断合并到一次了，并无实质区别。
 
-## 知识点
+## 💡 知识点
 
 1. 同 [TirmLeft](/medium/实现TrimLeft.md)

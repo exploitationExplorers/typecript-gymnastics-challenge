@@ -4,7 +4,7 @@ title: 实现Capitalize
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 实现 `Capitalize<T>` 它将字符串的第一个字母转换为大写，其余字母保持原样。
 
@@ -14,7 +14,7 @@ title: 实现Capitalize
 type capitalized = Capitalize<'hello world'>; // expected to be 'Hello world'
 ```
 
-## 分析
+## 🔍 分析
 
 思路其实比较简单，就是找到第一个字符，大写之后和其余字符拼接即可。
 
@@ -22,7 +22,7 @@ type capitalized = Capitalize<'hello world'>; // expected to be 'Hello world'
 
 同时 Ts 还自带了大写整个字符的方法 Uppercase， 想要实现本题目，可以通过推断匹配的方式选出第一个字符后，大写该字符，并和原字符拼接即可。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type MyCapitalize<S extends string> = S extends `${infer F}${infer R}`
@@ -30,6 +30,6 @@ type MyCapitalize<S extends string> = S extends `${infer F}${infer R}`
   : '';
 ```
 
-## 知识点
+## 💡 知识点
 
 1. 字符串推断匹配： `` A extends `${infer F}${infer R}`  ``

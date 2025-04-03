@@ -4,7 +4,7 @@ title: 实现ReplaceKeys
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 Implement a type ReplaceKeys, that replace keys in union types, if some type has not this key, just skip replacing, A type takes three arguments.
 
@@ -40,7 +40,7 @@ type ReplacedNodes = ReplaceKeys<
 type ReplacedNotExistKeys = ReplaceKeys<Nodes, 'name', { aa: number }>; // {type: 'A', name: never, flag: number} | NodeB | {type: 'C', name: never, flag: number} // would replace name to never
 ```
 
-## 分析
+## 🔍 分析
 
 这个题目中，涉及到两个联合类型，一个是入参中待替换的对象，一个是计划替换的属性名，而要替换的属性值则集中放在第三个参数中。
 
@@ -63,7 +63,7 @@ type ReplaceKeys<T, K, O> = {
 
 但是由于题目中输入的是联合类型，故需要先触发联合类型的分发特性后，再执行上述操作。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type ReplaceKeys<U, T, Y> = U extends any
@@ -73,7 +73,7 @@ type ReplaceKeys<U, T, Y> = U extends any
   : never;
 ```
 
-## 知识点
+## 💡 知识点
 
 1. 联合类型的分发特性
 2. 对象的遍历套路 `[P in keyof T]: T[P]`

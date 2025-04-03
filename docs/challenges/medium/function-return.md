@@ -4,7 +4,7 @@ title: 获取函数返回类型
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 不使用 `ReturnType` 实现 TypeScript 的 `ReturnType<T>` 泛型。
 
@@ -19,11 +19,11 @@ const fn = (v: boolean) => {
 type a = MyReturnType<typeof fn>; // 应推导出 "1 | 2"
 ```
 
-## 分析
+## 🔍 分析
 
 核心是利用 推断匹配的套路，只是推断的位置不同。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type MyReturnType<T> = T extends (...args: any[]) => infer R ? R : never;
@@ -36,7 +36,7 @@ type Test = MyReturnType<(a: number) => number>;
 
 这里需要注意的，是参数的写法，因为并不限制有多少参数，也不限制参数的类型，所以可能会理所当然的认为不写参数就可以了，但是实际上不写参数就对应着没有参数，那么就会导致类型判断出错，走了 false 逻辑。
 
-## 知识点
+## 💡 知识点
 
 1. 推断匹配可以用在函数的返回类型上
 2. 对函数的入参没有限制时，不能为空，可以写 `...args: any[]` 或者 `...args: unknown[]`

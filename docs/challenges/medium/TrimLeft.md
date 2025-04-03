@@ -4,7 +4,7 @@ title: 实现TrimLeft
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 实现 `TrimLeft<T>` ，它接收确定的字符串类型并返回一个新的字符串，其中新返回的字符串删除了原字符串开头的空白字符串。
 
@@ -14,7 +14,7 @@ title: 实现TrimLeft
 type trimed = TrimLeft<'  Hello World  '>; // 应推导出 'Hello World  '
 ```
 
-## 分析
+## 🔍 分析
 
 这一题和之前的题目基本都不搭噶了，因为操作的对象是字符串类型。不过字符串类型的操作和元组非常类似：
 
@@ -42,7 +42,7 @@ type TraverseString<T extends string> = T extends `${infer F}${infer R}`
 
 好了，回归本题目，要删除左侧的空白字符，那么只需要遍历字符，遇到空白，继续遍历，遇到非空白，直接返回当前字符即可。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 // ${' ' | '\n' | '\t'} 占据一个字符，R 匹配剩余的字符，如果能够匹配，证明第一个字符就是空白字符，此时需要继续处理剩余字符 R，否则返回当前字符 S
@@ -51,6 +51,6 @@ type TrimLeft<S extends string> = S extends `${' ' | '\n' | '\t'}${infer R}`
   : S;
 ```
 
-## 知识点
+## 💡 知识点
 
 1. 字符遍历：`` T extends `${F}${R}` ``

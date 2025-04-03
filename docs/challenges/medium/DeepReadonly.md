@@ -4,7 +4,7 @@ title: 实现DeepReadonly
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 实现一个通用的`DeepReadonly<T>`，它将对象的每个参数及其子对象递归地设为只读。
 
@@ -32,7 +32,7 @@ type Expected = {
 type Todo = DeepReadonly<X>; // should be same as `Expected`
 ```
 
-## 分析
+## 🔍 分析
 
 ```ts
 type DeepReadonly<T> = {
@@ -79,7 +79,7 @@ type Case5 = keyof (() => {});
 
 所以对于此题，只需要增加函数的额外处理即可。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type DeepReadonly<T> = {
@@ -93,7 +93,7 @@ type DeepReadonly<T> = {
 
 增加函数的场景判断即可。
 
-## 知识点
+## 💡 知识点
 
 1. 递归处理嵌套问题
 2. 元组可以使用遍历对象的方法进行遍历

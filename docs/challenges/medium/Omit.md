@@ -4,7 +4,7 @@ title: 实现Omit
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 不使用 `Omit` 实现 TypeScript 的 `Omit<T, K>` 泛型。
 
@@ -26,7 +26,7 @@ const todo: TodoPreview = {
 };
 ```
 
-## 分析
+## 🔍 分析
 
 Omit 是 ts 自带的一个工具类，其原本的内部实现如下：
 
@@ -76,7 +76,7 @@ type Case1 = Copy<{ a: 1; b: 2 }>;
 
 通过强制声明键值为 never，其结果就是该键值就会被忽略掉。到这一步了，题解也呼之欲出，只需要判断当前键值是否是目标键值的一员，如果是，就忽略掉。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type MyOmit<T, K extends keyof T> = {
@@ -86,7 +86,7 @@ type MyOmit<T, K extends keyof T> = {
 
 其核心就是利用 `as` 强制转换键值类型，又借助条件表达式将符合条件的键值改为 never，从而达到目标。
 
-## 知识点
+## 💡 知识点
 
 1. 对象遍历的方式： `{ [P in keyof T]: T[P] }`
 2. `as` 表达式在对象遍历时的用途
