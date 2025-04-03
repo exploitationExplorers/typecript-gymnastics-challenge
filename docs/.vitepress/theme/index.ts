@@ -11,6 +11,7 @@ import 'nprogress-v2/dist/index.css' // 进度条样式
 import Confetti from './components/Confetti.vue'
 import MyLayout from './components/MyLayout.vue';
 import Mouse from './components/Mouse.vue';
+import CartoonPlane from './components/CartoonPlane.vue';
 import MouseFollower from './components/MouseFollower.vue';
 import giscusTalk from 'vitepress-plugin-comment-with-giscus'; // 评论插件
 // 不蒜子
@@ -73,6 +74,7 @@ export default {
     app.component('Confetti', Confetti)
     app.component('Mouse', Mouse)  // 鼠标粒子效果
     app.component('MouseFollower', MouseFollower)  // 鼠标跟随效果
+    app.component('CartoonPlane', CartoonPlane)  // 卡通飞机效果
     if (inBrowser) {
       NProgress.configure({ showSpinner: false })
       router.onBeforeRouteChange = () => {
