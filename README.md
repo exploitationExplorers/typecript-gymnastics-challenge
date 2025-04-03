@@ -8,6 +8,10 @@
 
 🌐 在线体验地址：https://exploitationexplorers.github.io/typecript-gymnastics-challenge/
 
+## 🧩 项目首页
+
+[all-challenges.png](./docs/public/image.png)
+
 ## 🎯 项目特点
 - 🧩 渐进式难度设计，从基础到进阶
 - 🔬 每个挑战都配备单元测试
