@@ -4,7 +4,7 @@ title: 实现Awaited
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 假如我们有一个 Promise 对象，这个 Promise 对象会返回一个类型。在 TS 中，我们用 `Promise<T>` 中的 T 来描述这个 Promise 返回的类型。请你实现一个类型，可以获取这个类型。
 
@@ -16,7 +16,7 @@ type ExampleType = Promise<string>;
 type Result = MyAwaited<ExampleType>; // string
 ```
 
-## 分析
+## 🔍 分析
 
 ```ts
 type MyAwaited<T> = T extends Promise<infer R> ? R : never;
@@ -41,7 +41,7 @@ type Case2 = MyAwaited<Promise<Promise<string>>>; // string
 type Case3 = MyAwaited<Promise<Promise<Promise<string>>>>; // string
 ```
 
-## 题解
+## 🛠️ 题解
 
 在题目的 Case 中，存在如下场景：
 
@@ -65,7 +65,7 @@ type MyAwaited<T> = T extends
 
 这里还有一点值得一提的是，当联合类型位于 `extends` 右侧时，并没有分发特性，虽然判断会做多次，但是其多次判断的结果会以或的方式合并后交由 `extends` 的逻辑处理，比如，`'a' extends 'a' | 'b' ? 1 : 2`，此时，可以理解为会进行 `'a' extends 'a'` 以及 `'a' extends 'b'`两次判断，两者有一处为 true 即返回 1，否则返回 2。但是并不会返回 `1 | 2`。
 
-## 知识点
+## 💡 知识点
 
 1. `A extends Promise<infer R>`，匹配推断类型
 2. 递归解决嵌套问题

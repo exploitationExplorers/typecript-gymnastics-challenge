@@ -4,7 +4,7 @@ title: 实现Parameters
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 实现内置的 `Parameters<T>` 类型，而不是直接使用它。
 
@@ -17,7 +17,7 @@ const foo = (arg1: string, arg2: number): void => {};
 type FunctionParamsType = MyParameters<typeof foo>;
 ```
 
-## 分析
+## 🔍 分析
 
 使用 `A extends infer B` 这样的匹配推断，不过这里推断的是函数的参数。可以先从一个参数推断开始：
 
@@ -39,7 +39,7 @@ type Case2 = MyFirstParameter<() => {}>;
 
 可以通过扩展操作符进行。
 
-## 题解
+## 🛠️ 题解
 
 ```ts
 type Parameters<T extends (...args: any) => any> =
@@ -47,7 +47,7 @@ type Parameters<T extends (...args: any) => any> =
   T extends (...args: infer P) => any ? P : never;
 ```
 
-## 知识点
+## 💡 知识点
 
 1. 函数类型，也可以做推断匹配，`A extends (...args: infer P) => infer R`
 2. 函数类型，推断匹配时，使用扩展操作符

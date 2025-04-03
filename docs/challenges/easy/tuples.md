@@ -4,7 +4,7 @@ title: 元组转换为对象
 
 # {{ $frontmatter.title }}
 
-## 题目描述
+## 🎯 题目描述
 
 传入一个元组类型，将这个元组类型转换为对象类型，这个对象类型的键/值都是从元组中遍历出来。
 
@@ -18,7 +18,7 @@ const tuple = ['tesla', 'model 3', 'model X', 'model Y'] as const;
 type result = TupleToObject<typeof tuple>;
 ```
 
-## 分析
+## 🔍 分析
 
 此题目标是生成一个新的对象类型，其键值和属性值就是传入的元组的每一项的值，在前面的题目中我们了解了遍历一个对象的方法，加以改动，就可以改为生成一个对象的方法，如下，给定一个联合类型 `'a' | 'b'`，生成一个新的对象：
 
@@ -64,7 +64,7 @@ type MyArrayLike<T> = {
 type Case3 = ArrayLike<string>[number];
 ```
 
-## 题解
+## 🛠️ 题解
 
 了解了元组转为联合类型的方法后，答案也就呼之欲出了：
 
@@ -76,6 +76,6 @@ type TupleToObject<T extends readonly PropertyKey[]> = {
 
 这里也是，需要对输入的元组进行类型限制，其元素必须是 `PropertyKey`(ts 内置类型: `type PropertyKey = string | number | symbol`)。
 
-## 知识点
+## 💡 知识点
 
 1. `T[number]` 索引签名访问，元组转联合类型
