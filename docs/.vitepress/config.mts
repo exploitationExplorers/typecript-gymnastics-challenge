@@ -32,7 +32,30 @@ export default defineConfig({
                 { text: '实现Parameters', link: '/challenges/easy/paramEters' },
               ]
              },
-            { text: '中等', link: '/challenges/medium/' },
+            { text: '中等',
+              items: [
+                { text: '实现Absolute', link: '/challenges/medium/Absolute' },
+                { text: '实现Capitalize', link: '/challenges/medium/Capitalize' },
+                { text: '百分比解析器', link: '/challenges/medium/percentageParser' },
+                { text: '获取函数返回类型', link: '/challenges/medium/function-return' },
+                { text: '计算字符的长度', link: '/challenges/medium/character-length' },
+                { text: '实现DeepReadonly', link: '/challenges/medium/DeepReadonly' },
+                { text: '实现ReplaceAll', link: '/challenges/medium/ReplaceAll' },
+                { text: '实现TrimLeft', link: '/challenges/medium/TrimLeft' },
+                { text: '实现TrimRight', link: '/challenges/medium/TrimRight' },
+                { text: '实现Trim', link: '/challenges/medium/Trim' },
+                { text: '实现Diff', link: '/challenges/medium/Diff' },
+                { text: '实现Omit', link: '/challenges/medium/Omit' },
+                { text: '实现ReadonlyKeys', link: '/challenges/medium/ReadonlyKeys' },
+                { text: '实现Flatten', link: '/challenges/medium/Flatten' },
+                { text: '实现Merge', link: '/challenges/medium/Merge' },
+                { text: '实现Promise.all', link: '/challenges/medium/Promise.all' },
+                { text: '实现Replace', link: '/challenges/medium/Replace' },
+                { text: '实现KebabCase', link: '/challenges/medium/KebabCase' },
+                { text: '实现Pop', link: '/challenges/medium/Pop' },
+                { text: '最后一个元素', link: '/challenges/medium/lastOne' },
+              ]
+             },
             { text: '困难', link: '/challenges/hard/' },
             { text: '地狱', link: '/challenges/extreme/' }
           ]
