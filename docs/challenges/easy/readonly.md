@@ -51,4 +51,3 @@ type MyReadonly<T> = {
 
 1. `[P in keyof T]` 遍历 对象类型(数组也是对象)
 2. `readonly` 增加修饰符即可
-

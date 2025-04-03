@@ -23,7 +23,15 @@ export default defineConfig({
           text: '挑战',
           items: [
             { text: '挑战介绍', link: '/challenges/' },
-            { text: '简单', link: '/challenges/easy/' },
+            { text: '简单', 
+              items: [
+                { text: '实现Pick', link: '/challenges/easy/pick' },
+                { text: '元组转换为对象', link: '/challenges/easy/tuples' },
+                { text: '实现Readonly', link: '/challenges/easy/readonly' },
+                { text: '实现Awaited', link: '/challenges/easy/awaited' },
+                { text: '实现Parameters', link: '/challenges/easy/paramEters' },
+              ]
+             },
             { text: '中等', link: '/challenges/medium/' },
             { text: '困难', link: '/challenges/hard/' },
             { text: '地狱', link: '/challenges/extreme/' }
