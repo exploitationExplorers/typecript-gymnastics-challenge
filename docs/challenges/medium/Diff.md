@@ -24,7 +24,7 @@ type Result2 = Diff<Bar, Foo>; // { b: number, c: boolean }
 
 ## 🔍 分析
 
-这道题目其实就比较宽泛了，获取只存在于 A 或 只存在于 B 中的属性，网上有很多借助 `Omit`, `Exclude`, `&` 的解法，我认为都不太直观，其实借助 `as` 非常好实现。关于 `as` 可以参考 [实现 Omit](/medium/实现Omit.md) 中介绍的部分。
+这道题目其实就比较宽泛了，获取只存在于 A 或 只存在于 B 中的属性，网上有很多借助 `Omit`, `Exclude`, `&` 的解法，我认为都不太直观，其实借助 `as` 非常好实现。关于 `as` 可以参考 [实现 Omit](./Omit.md) 中介绍的部分。
 
 首先通过 `keyof A | keyof B` 可以获取所有的属性，接下来只需要让即存在于 A 中的属性 又存在于 B 中的属性为 never 即可去除该属性，也就是 `P extends keyof A & keyof B ? never : P`。讲到这里题解基本就出来了。
 
@@ -41,4 +41,4 @@ type Diff<O, O1> = {
 
 ## 💡 知识点
 
-1. 同 [实现 Omit](/medium/实现Omit.md)。
+1. 同 [实现 Omit](./Omit.md)。

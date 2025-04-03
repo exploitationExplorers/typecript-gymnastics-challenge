@@ -30,6 +30,8 @@ export default defineConfig({
                 { text: '实现Readonly', link: '/challenges/easy/readonly' },
                 { text: '实现Awaited', link: '/challenges/easy/awaited' },
                 { text: '实现Parameters', link: '/challenges/easy/paramEters' },
+                { text: '实现Exclude', link: '/challenges/easy/Exclude' },
+                { text: '第一个元素', link: '/challenges/easy/firstOne' },
               ]
              },
             { text: '中等',
@@ -52,7 +54,6 @@ export default defineConfig({
                 { text: '实现Promise.all', link: '/challenges/medium/Promise.all' },
                 { text: '实现Replace', link: '/challenges/medium/Replace' },
                 { text: '实现KebabCase', link: '/challenges/medium/KebabCase' },
-                { text: '实现Pop', link: '/challenges/medium/Pop' },
                 { text: '最后一个元素', link: '/challenges/medium/lastOne' },
               ]
              },
