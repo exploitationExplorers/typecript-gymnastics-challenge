@@ -46,7 +46,7 @@ git clone https://github.com/ExploitationExplorers/typecript-gymnastics-challeng
 npm install
 
 # 运行测试
-npm test
+npm run docs:dev
 ```
 
 ## 🤝 参与贡献
