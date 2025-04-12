@@ -136,5 +136,5 @@ export default defineConfig({
     GitChangelogMarkdownSection()
   ]
   },
-  base: '/typecript-gymnastics-challenge/'
+  //base: '/typecript-gymnastics-challenge/'
 })
