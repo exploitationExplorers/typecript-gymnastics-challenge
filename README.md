@@ -6,7 +6,7 @@
 
 ✨ 欢迎来到TypeScript类型体操训练场！本项目通过一系列精心设计的挑战题目，帮助你掌握TypeScript高级类型编程技巧。
 
-🌐 在线体验地址：https://exploitationexplorers.github.io/typecript-gymnastics-challenge/
+🌐 在线体验地址：https://typecript-gymnastics-challenge.vercel.app
 
 ## 🧩 项目首页
 
